@@ -136,7 +136,12 @@ end;
 procedure TFormMain.Ring(numberOfBells: Integer);
 begin
   UpdateLabelWatch;
-  //TODO
+  while numberOfBells > 0 do
+  begin //TODO: this is just for testing; needs to ring bell instead once we have an audio library
+    if numberOfBells > 2 then ShowMessage('Ding, ding!')
+    else ShowMessage('Ding!');
+    Dec(numberOfBells, 2);
+  end;
 end;
 
 procedure TFormMain.UpdateLabelWatch;
