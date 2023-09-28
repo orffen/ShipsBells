@@ -55,6 +55,10 @@
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="About"/>
       </Unit>
+      <Unit>
+        <Filename Value=".gitignore.txt"/>
+        <IsPartOfProject Value="True"/>
+      </Unit>
     </Units>
   </ProjectOptions>
   <CompilerOptions>

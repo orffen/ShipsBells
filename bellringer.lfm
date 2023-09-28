@@ -69,7 +69,6 @@ object FormMain: TFormMain
     ParentColor = False
   end
   object TrayIcon: TTrayIcon
-    BalloonFlags = bfInfo
     PopUpMenu = PopupTrayMenu
     Icon.Data = {
       148C02000000010009000000000001002000BE13000096000000808000000100
@@ -5290,6 +5289,7 @@ object FormMain: TFormMain
       80010000000000000001000080010000C0030000E0070000E0070000E0070000
       E0070000F00F0000F00F0000F00F0000F81F0000FE7F0000
     }
+    Hint = 'Ship''s Bells'
     Visible = True
     OnClick = TrayIconClick
     OnDblClick = TrayIconClick

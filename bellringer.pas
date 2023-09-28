@@ -28,6 +28,11 @@ type
     procedure MenuItemQuitClick(Sender: TObject);
     procedure TrayIconClick(Sender: TObject);
   private
+    function Bells: Integer;
+    function Watch: Integer;
+    function WatchName(aWatch: Integer): String;
+    procedure Ring(numberOfBells: Integer);
+    procedure UpdateLabelWatch;
 
   public
 
@@ -39,6 +44,9 @@ var
 implementation
 
 {$R *.lfm}
+
+const
+  BellNames: array of String = ('no?!?!?!', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight');
 
 { TFormMain }
 
@@ -54,7 +62,7 @@ end;
 
 procedure TFormMain.FormCreate(Sender: TObject);
 begin
-  LabelWatch.Caption := 'Eight bells in the Afternoon Watch';
+  UpdateLabelWatch;
 end;
 
 procedure TFormMain.MenuItemAboutClick(Sender: TObject);
@@ -70,6 +78,54 @@ end;
 procedure TFormMain.TrayIconClick(Sender: TObject);
 begin
   FormMain.Show;
+end;
+
+function TFormMain.Bells: Integer;
+begin
+  Result := 1; //TODO
+end;
+
+function TFormMain.Watch: Integer;
+var
+  Hour, Minutes, Discard: Word;
+begin
+  DecodeTime(Time, Hour, Minutes, Discard, Discard);
+  Result := Hour * 2;
+  if Minutes >= 45
+  then Result := Result + 2
+  else if Minutes >= 15
+  then Result := Result + 1;
+end;
+
+function TFormMain.WatchName(aWatch: Integer): String;
+const
+  WatchNames: array of String = ('First', 'Middle', 'Morning', 'Forenoon', 'Afternoon', 'First Dog', 'Second Dog');
+var
+  w: Integer;
+begin
+  w := aWatch mod 48;
+  if w = 0 then Result := WatchNames[0]
+  else if w <= 8 then Result := WatchNames[1]
+  else if w <= 16 then Result := WatchNames[2]
+  else if w <= 24 then Result := WatchNames[3]
+  else if w <= 32 then Result := WatchNames[4]
+  else if w <= 36 then Result := WatchNames[5]
+  else if w <= 40 then Result := WatchNames[6]
+  else Result := WatchNames[0];
+end;
+
+procedure TFormMain.Ring(numberOfBells: Integer);
+begin
+  UpdateLabelWatch;
+  //TODO
+end;
+
+procedure TFormMain.UpdateLabelWatch;
+begin
+  if Bells = 1
+  then LabelWatch.Caption := Format('%s bell in the %s Watch', [BellNames[Bells], WatchName(Watch)])
+  else LabelWatch.Caption := Format('%s bells in the %s Watch', [BellNames[Bells], WatchName(Watch)]);
+  TrayIcon.Hint := LabelWatch.Caption;
 end;
 
 end.
