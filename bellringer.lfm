@@ -5309,4 +5309,25 @@ object FormMain: TFormMain
       OnClick = MenuItemQuitClick
     end
   end
+  object PlaySound: Tplaysound
+    About.Description.Strings = (
+      'Plays WAVE sounds in Windows or Linux'
+    )
+    About.Title = 'About PlaySound'
+    About.Height = 400
+    About.Width = 400
+    About.Font.Color = clNavy
+    About.Font.Height = -13
+    About.BackGroundColor = clCream
+    About.Version = '0.0.7'
+    About.Authorname = 'Gordon Bamber'
+    About.Organisation = 'Public Domain'
+    About.AuthorEmail = 'minesadorada@charcodelvalle.com'
+    About.ComponentName = 'PlaySound'
+    About.LicenseType = abModifiedGPL
+    PlayStyle = psSync
+    PlayCommand = 'sndPlaySound'
+    Left = 152
+    Top = 40
+  end
 end

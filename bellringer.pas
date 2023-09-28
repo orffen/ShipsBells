@@ -6,7 +6,7 @@ interface
 
 uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, StdCtrls, Menus,
-  ExtCtrls, About;
+  ExtCtrls, uplaysound, About;
 
 type
 
@@ -19,6 +19,7 @@ type
     LabelShipsBells: TLabel;
     MenuItemAbout: TMenuItem;
     MenuItemQuit: TMenuItem;
+    PlaySound : Tplaysound;
     PopupTrayMenu: TPopupMenu;
     TrayIcon: TTrayIcon;
     procedure ButtonAboutClick(Sender: TObject);
@@ -64,6 +65,7 @@ end;
 procedure TFormMain.FormCreate(Sender: TObject);
 begin
   UpdateLabelWatch;
+  Ring(Bells); //TODO: for testing
 end;
 
 procedure TFormMain.FormWindowStateChange(Sender : TObject);
@@ -133,13 +135,14 @@ begin
   else Result := WatchNames[0];
 end;
 
-procedure TFormMain.Ring(numberOfBells: Integer);
+procedure TFormMain.Ring(numberOfBells: Integer); //TODO: needs to be spawned on another thread
 begin
   UpdateLabelWatch;
   while numberOfBells > 0 do
-  begin //TODO: this is just for testing; needs to ring bell instead once we have an audio library
-    if numberOfBells > 2 then ShowMessage('Ding, ding!')
-    else ShowMessage('Ding!');
+  begin
+    if numberOfBells > 2 then PlaySound.SoundFile := 'tangtang.wav'
+    else PlaySound.SoundFile := 'tang.wav';
+    PlaySound.Execute;
     Dec(numberOfBells, 2);
   end;
 end;
