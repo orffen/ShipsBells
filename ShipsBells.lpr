@@ -16,10 +16,10 @@ uses
 
 begin
   RequireDerivedFormResource:=True;
-  Application.Title:='Ship''s Bells';
-  Application.Scaled:=True;
+  Application.Title := 'Ship''s Bells';
+  Application.Scaled := True;
   Application.Initialize;
-  Application.ShowMainForm:=False;
+  Application.ShowMainForm := False;
   Application.CreateForm(TFormMain, FormMain);
   Application.CreateForm(TFormAbout, FormAbout);
   Application.Run;

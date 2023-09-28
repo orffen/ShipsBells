@@ -11,6 +11,7 @@ object FormMain: TFormMain
   ClientWidth = 260
   Font.Height = -16
   OnCreate = FormCreate
+  OnWindowStateChange = FormWindowStateChange
   Position = poScreenCenter
   LCLVersion = '2.2.6.0'
   object LabelShipsBells: TLabel

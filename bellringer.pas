@@ -24,6 +24,7 @@ type
     procedure ButtonAboutClick(Sender: TObject);
     procedure ButtonQuitClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
+    procedure FormWindowStateChange(Sender : TObject);
     procedure MenuItemAboutClick(Sender: TObject);
     procedure MenuItemQuitClick(Sender: TObject);
     procedure TrayIconClick(Sender: TObject);
@@ -63,6 +64,15 @@ end;
 procedure TFormMain.FormCreate(Sender: TObject);
 begin
   UpdateLabelWatch;
+end;
+
+procedure TFormMain.FormWindowStateChange(Sender : TObject);
+begin
+  if FormMain.WindowState = wsMinimized then
+  begin
+    FormMain.WindowState := wsNormal; // needed to make form redraw normally
+    FormMain.Hide;
+  end;
 end;
 
 procedure TFormMain.MenuItemAboutClick(Sender: TObject);
