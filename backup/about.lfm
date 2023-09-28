@@ -1,0 +1,39 @@
+object FormAbout: TFormAbout
+  Left = 255
+  Height = 137
+  Top = 145
+  Width = 513
+  AutoSize = True
+  BorderIcons = []
+  BorderStyle = bsDialog
+  Caption = 'FormAbout'
+  ClientHeight = 137
+  ClientWidth = 513
+  Font.Height = -16
+  LCLVersion = '2.2.6.0'
+  object LabelAbout: TLabel
+    AnchorSideLeft.Control = Owner
+    AnchorSideTop.Control = Owner
+    Left = 10
+    Height = 84
+    Top = 10
+    Width = 490
+    BorderSpacing.Around = 10
+    Caption = 'Ship''s Bells'#13#10'a public domain no-frills program to strike the bells of the watch.'#13#10'Free Pascal version written by Steve Simenic (orffen@orffenspace.com)'#13#10'Original Java version written by Nigel Kerr (shipsbells@nigelk.org)'
+    ParentColor = False
+  end
+  object ButtonClose: TButton
+    AnchorSideLeft.Control = LabelAbout
+    AnchorSideLeft.Side = asrCenter
+    AnchorSideTop.Control = LabelAbout
+    AnchorSideTop.Side = asrBottom
+    Left = 218
+    Height = 25
+    Top = 104
+    Width = 75
+    BorderSpacing.Bottom = 10
+    Caption = 'Close'
+    OnClick = ButtonCloseClick
+    TabOrder = 0
+  end
+end

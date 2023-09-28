@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CONFIG>
+  <ProjectSession>
+    <PathDelim Value="\"/>
+    <Version Value="12"/>
+    <BuildModes Active="Default"/>
+    <Units>
+      <Unit>
+        <Filename Value="ShipsBells.lpr"/>
+        <IsPartOfProject Value="True"/>
+        <IsVisibleTab Value="True"/>
+        <EditorIndex Value="1"/>
+        <CursorPos X="23" Y="13"/>
+        <UsageCount Value="20"/>
+        <Loaded Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="bellringer.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="FormMain"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="BellRinger"/>
+        <TopLine Value="44"/>
+        <CursorPos X="3" Y="47"/>
+        <UsageCount Value="20"/>
+        <Loaded Value="True"/>
+        <LoadedDesigner Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="C:\lazarus\lcl\include\control.inc"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="3513"/>
+        <CursorPos Y="3529"/>
+        <UsageCount Value="10"/>
+      </Unit>
+      <Unit>
+        <Filename Value="about.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="FormAbout"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="About"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="7"/>
+        <CursorPos X="64" Y="14"/>
+        <UsageCount Value="20"/>
+      </Unit>
+      <Unit>
+        <Filename Value="tang.wav"/>
+        <EditorIndex Value="-1"/>
+        <UsageCount Value="20"/>
+        <DefaultSyntaxHighlighter Value="None"/>
+      </Unit>
+      <Unit>
+        <Filename Value="tangtang.wav"/>
+        <EditorIndex Value="-1"/>
+        <WindowIndex Value="-1"/>
+        <TopLine Value="-1"/>
+        <CursorPos X="-1" Y="-1"/>
+        <UsageCount Value="20"/>
+        <DefaultSyntaxHighlighter Value="None"/>
+      </Unit>
+    </Units>
+    <JumpHistory HistoryIndex="19">
+      <Position>
+        <Filename Value="bellringer.pas"/>
+        <Caret Column="16"/>
+      </Position>
+      <Position>
+        <Filename Value="bellringer.pas"/>
+        <Caret Line="7" Column="38"/>
+      </Position>
+      <Position>
+        <Filename Value="bellringer.pas"/>
+        <Caret Line="38" Column="24" TopLine="9"/>
+      </Position>
+      <Position>
+        <Filename Value="bellringer.pas"/>
+        <Caret Line="39" Column="24" TopLine="9"/>
+      </Position>
+      <Position>
+        <Filename Value="bellringer.pas"/>
+        <Caret Line="38" Column="24" TopLine="9"/>
+      </Position>
+      <Position>
+        <Filename Value="bellringer.pas"/>
+        <Caret Line="39" Column="24" TopLine="9"/>
+      </Position>
+      <Position>
+        <Filename Value="bellringer.pas"/>
+        <Caret Line="40" Column="24" TopLine="11"/>
+      </Position>
+      <Position>
+        <Filename Value="bellringer.pas"/>
+        <Caret Line="45" Column="18" TopLine="17"/>
+      </Position>
+      <Position>
+        <Filename Value="bellringer.pas"/>
+        <Caret Line="53" Column="36" TopLine="21"/>
+      </Position>
+      <Position>
+        <Filename Value="bellringer.pas"/>
+        <Caret Line="52" Column="15" TopLine="24"/>
+      </Position>
+      <Position>
+        <Filename Value="bellringer.pas"/>
+        <Caret Line="46" TopLine="4"/>
+      </Position>
+      <Position>
+        <Filename Value="bellringer.pas"/>
+        <Caret Line="51" Column="3" TopLine="23"/>
+      </Position>
+      <Position>
+        <Filename Value="bellringer.pas"/>
+        <Caret Line="52" Column="3" TopLine="24"/>
+      </Position>
+      <Position>
+        <Filename Value="bellringer.pas"/>
+        <Caret Line="53" Column="3" TopLine="25"/>
+      </Position>
+      <Position>
+        <Filename Value="bellringer.pas"/>
+        <Caret Line="60" Column="3" TopLine="28"/>
+      </Position>
+      <Position>
+        <Filename Value="bellringer.pas"/>
+        <Caret Line="56" Column="3" TopLine="38"/>
+      </Position>
+      <Position>
+        <Filename Value="ShipsBells.lpr"/>
+        <Caret Line="13" Column="23"/>
+      </Position>
+      <Position>
+        <Filename Value="bellringer.pas"/>
+        <Caret Line="62" Column="17" TopLine="33"/>
+      </Position>
+      <Position>
+        <Filename Value="bellringer.pas"/>
+        <Caret Line="52" Column="17" TopLine="23"/>
+      </Position>
+      <Position>
+        <Filename Value="bellringer.pas"/>
+        <Caret Line="72" Column="36" TopLine="44"/>
+      </Position>
+    </JumpHistory>
+    <RunParams>
+      <FormatVersion Value="2"/>
+      <Modes ActiveMode=""/>
+    </RunParams>
+  </ProjectSession>
+</CONFIG>
