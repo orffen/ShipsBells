@@ -81,8 +81,17 @@ begin
 end;
 
 function TFormMain.Bells: Integer;
+var
+  w: Integer;
 begin
-  Result := 1; //TODO
+  w := Watch;
+  if w = 39 then Result := 3
+  else if w = 38 then Result := 2
+  else if w = 37 then Result := 1
+  else begin
+    Result := w mod 8;
+    if Result = 0 then Result := 8;
+  end;
 end;
 
 function TFormMain.Watch: Integer;

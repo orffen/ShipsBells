@@ -19,8 +19,8 @@
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="BellRinger"/>
         <IsVisibleTab Value="True"/>
-        <TopLine Value="94"/>
-        <CursorPos X="9" Y="106"/>
+        <TopLine Value="69"/>
+        <CursorPos X="14" Y="87"/>
         <UsageCount Value="20"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
@@ -74,7 +74,7 @@
         <DefaultSyntaxHighlighter Value="None"/>
       </Unit>
     </Units>
-    <JumpHistory HistoryIndex="27">
+    <JumpHistory HistoryIndex="29">
       <Position>
         <Filename Value="bellringer.pas"/>
         <Caret Column="16"/>
@@ -186,6 +186,14 @@
       <Position>
         <Filename Value="bellringer.pas"/>
         <Caret Line="114" Column="44" TopLine="88"/>
+      </Position>
+      <Position>
+        <Filename Value="bellringer.pas"/>
+        <Caret Line="92" Column="36" TopLine="79"/>
+      </Position>
+      <Position>
+        <Filename Value="bellringer.pas"/>
+        <Caret Line="89" Column="12" TopLine="69"/>
       </Position>
     </JumpHistory>
     <RunParams>
