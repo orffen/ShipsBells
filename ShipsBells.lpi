@@ -33,9 +33,6 @@
     </RunParams>
     <RequiredPackages>
       <Item>
-        <PackageName Value="playwavepackage"/>
-      </Item>
-      <Item>
         <PackageName Value="LCL"/>
       </Item>
     </RequiredPackages>
@@ -48,7 +45,6 @@
         <Filename Value="bellringer.pas"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="FormMain"/>
-        <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="BellRinger"/>
       </Unit>
