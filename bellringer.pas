@@ -6,7 +6,7 @@ interface
 
 uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, StdCtrls, Menus,
-  ExtCtrls, uos_flat, About;
+  ExtCtrls, About;
 
 type
 
@@ -65,20 +65,7 @@ begin
 end;
 
 procedure TFormMain.FormCreate(Sender: TObject);
-var
-  uos_init_result: Integer;
 begin
-  {$IfDef WINDOWS}
-  uos_init_result := uos_LoadLib('./lib/LibPortaudio-64.dll', './lib/LibSndFile-64.dll', Nil, Nil, Nil, Nil);
-  {$Else}
-  uos_init_result := uos_LoadLib('system', 'system', Nil, Nil, Nil, Nil);
-  {$EndIf}
-  if uos_init_result <> 0 then
-  begin
-    ShowMessage('Error! Unable to initialise sound system.');
-    Application.Terminate;
-  end;
-  Ring(Bells); //TODO: for testing
   UpdateLabelWatch;
   TimerRing.Interval := GetInterval;
   TimerRing.Enabled := True;
