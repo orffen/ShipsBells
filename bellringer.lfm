@@ -5294,11 +5294,11 @@ object FormMain: TFormMain
     Visible = True
     OnClick = TrayIconClick
     OnDblClick = TrayIconClick
-    Left = 213
+    Left = 229
     Top = 40
   end
   object PopupTrayMenu: TPopupMenu
-    Left = 184
+    Left = 200
     Top = 40
     object MenuItemAbout: TMenuItem
       Caption = 'About'
@@ -5308,5 +5308,12 @@ object FormMain: TFormMain
       Caption = 'Quit'
       OnClick = MenuItemQuitClick
     end
+  end
+  object TimerRing: TTimer
+    Enabled = False
+    Interval = 0
+    OnTimer = TimerRingTimer
+    Left = 171
+    Top = 40
   end
 end

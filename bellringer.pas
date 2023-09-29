@@ -20,6 +20,7 @@ type
     MenuItemAbout: TMenuItem;
     MenuItemQuit: TMenuItem;
     PopupTrayMenu: TPopupMenu;
+    TimerRing : TTimer;
     TrayIcon: TTrayIcon;
     procedure ButtonAboutClick(Sender: TObject);
     procedure ButtonQuitClick(Sender: TObject);
@@ -27,9 +28,11 @@ type
     procedure FormWindowStateChange(Sender : TObject);
     procedure MenuItemAboutClick(Sender: TObject);
     procedure MenuItemQuitClick(Sender: TObject);
+    procedure TimerRingTimer(Sender : TObject);
     procedure TrayIconClick(Sender: TObject);
   private
     function Bells: Integer;
+    function GetInterval: Cardinal;
     function Watch: Integer;
     function WatchName(aWatch: Integer): String;
     procedure Ring(numberOfBells: Integer);
@@ -64,6 +67,8 @@ end;
 procedure TFormMain.FormCreate(Sender: TObject);
 begin
   UpdateLabelWatch;
+  TimerRing.Interval := GetInterval;
+  TimerRing.Enabled := True;
 end;
 
 procedure TFormMain.FormWindowStateChange(Sender : TObject);
@@ -85,6 +90,17 @@ begin
   Application.Terminate;
 end;
 
+procedure TFormMain.TimerRingTimer(Sender : TObject);
+begin
+  begin
+    TimerRing.Enabled := False;
+    UpdateLabelWatch;
+    Ring(Bells);
+    TimerRing.Interval := GetInterval;
+    TimerRing.Enabled := True;
+  end;
+end;
+
 procedure TFormMain.TrayIconClick(Sender: TObject);
 begin
   FormMain.Show;
@@ -102,6 +118,17 @@ begin
     Result := w mod 8;
     if Result = 0 then Result := 8;
   end;
+end;
+
+function TFormMain.GetInterval: Cardinal;
+var
+  Hours, Minutes, Seconds, Milliseconds: Word;
+begin
+  DecodeTime(Time, Hours, Minutes, Seconds, Milliseconds);
+  Minutes := (59 - Minutes) mod 30;
+  Seconds := 59 - Seconds;
+  Milliseconds := 1000 - Milliseconds;
+  Result := Cardinal((Minutes * 60 * 1000) + (Seconds * 1000) + Milliseconds);
 end;
 
 function TFormMain.Watch: Integer;
@@ -135,7 +162,6 @@ end;
 
 procedure TFormMain.Ring(numberOfBells: Integer);
 begin
-  UpdateLabelWatch;
   while numberOfBells > 0 do
   begin //TODO: this is just for testing; needs to ring bell instead once we have an audio library
     if numberOfBells > 2 then ShowMessage('Ding, ding!')
