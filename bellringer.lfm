@@ -5301,12 +5301,13 @@ object FormMain: TFormMain
   object PopupTrayMenu: TPopupMenu
     Left = 200
     Top = 40
-    object MenuItemAbout: TMenuItem
-      Caption = 'About'
-      OnClick = MenuItemAboutClick
+    object MenuItemOpen: TMenuItem
+      Caption = '&Open'
+      Default = True
+      OnClick = MenuItemOpenClick
     end
     object MenuItemQuit: TMenuItem
-      Caption = 'Quit'
+      Caption = '&Quit'
       OnClick = MenuItemQuitClick
     end
   end

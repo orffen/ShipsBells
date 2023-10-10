@@ -29,7 +29,7 @@ type
     ButtonAbout: TButton;
     LabelWatch: TLabel;
     LabelShipsBells: TLabel;
-    MenuItemAbout: TMenuItem;
+    MenuItemOpen : TMenuItem;
     MenuItemQuit: TMenuItem;
     PlaySound : Tplaysound;
     PopupTrayMenu: TPopupMenu;
@@ -40,6 +40,7 @@ type
     procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure FormWindowStateChange(Sender: TObject);
+    procedure MenuItemOpenClick(Sender : TObject);
     procedure MenuItemAboutClick(Sender: TObject);
     procedure MenuItemQuitClick(Sender: TObject);
     procedure TimerRingTimer(Sender: TObject);
@@ -89,8 +90,8 @@ constructor TRingThread.Create(player: Tplaysound; numberOfBells: Integer);
 begin
   PlaySound := player;
   BellsToRing := numberOfBells;
-  inherited Create(False);
   FreeOnTerminate := True;
+  inherited Create(False);
 end;
 
 { TFormMain }
@@ -126,6 +127,11 @@ begin
     FormMain.WindowState := wsNormal; // needed to make form redraw normally
     FormMain.Hide;
   end;
+end;
+
+procedure TFormMain.MenuItemOpenClick(Sender: TObject);
+begin
+  FormMain.Show;
 end;
 
 procedure TFormMain.MenuItemAboutClick(Sender: TObject);
