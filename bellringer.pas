@@ -6,8 +6,8 @@ interface
 
 uses
   Classes, SysUtils, LCLType, Forms, Controls, Graphics, Dialogs, StdCtrls,
-  Menus, ExtCtrls, About, acs_audio, acs_file,
-  {$IfDef WINDOWS} acs_stdaudio, {$Else} acs_alsaaudio, {$EndIf};
+  Menus, ExtCtrls, acs_audio, acs_file,
+  {$IfDef WINDOWS} acs_stdaudio {$Else} acs_alsaaudio {$EndIf}, About;
 
 type
 
