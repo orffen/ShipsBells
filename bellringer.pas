@@ -6,7 +6,8 @@ interface
 
 uses
   Classes, SysUtils, LCLType, Forms, Controls, Graphics, Dialogs, StdCtrls,
-  Menus, ExtCtrls, acs_audio, acs_file, acs_stdaudio, About;
+  Menus, ExtCtrls, About, acs_audio, acs_file,
+  {$IfDef WINDOWS} acs_stdaudio, {$Else} acs_alsaaudio, {$EndIf};
 
 type
 
@@ -118,6 +119,9 @@ end;
 
 procedure TFormMain.FormCreate(Sender: TObject);
 begin
+  {$IfDef LINUX}
+  AcsAudioOut.DriverName := 'Alsa';
+  {$EndIf}
   CreateWavFiles;
   UpdateLabelWatch;
   TimerRing.Interval := GetInterval;
