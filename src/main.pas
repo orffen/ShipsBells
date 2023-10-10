@@ -1,4 +1,4 @@
-unit BellRinger;
+unit Main;
 
 {$mode objfpc}{$H+}
 
@@ -7,7 +7,12 @@ interface
 uses
   Classes, SysUtils, LCLType, Forms, Controls, Graphics, Dialogs, StdCtrls,
   Menus, ExtCtrls, acs_audio, acs_file,
-  {$IfDef WINDOWS} acs_stdaudio, {$Else} acs_alsaaudio, {$EndIf} About;
+  {$IfDef WINDOWS}
+  acs_stdaudio,
+  {$Else}
+  acs_alsaaudio,
+  {$EndIf}
+  About;
 
 type
 
