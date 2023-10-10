@@ -228,7 +228,7 @@ var
   F: TFileStream;
   R: TResourceStream;
 begin
-  {$IfDef UNIX}
+  {$IfDef LINUX}
   TempDir := '/tmp/shipsbells/';
   {$Else}
   TempDir := GetEnvironmentVariable('TEMP') + '\shipsbells\';
