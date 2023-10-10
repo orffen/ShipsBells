@@ -110,7 +110,6 @@ begin
   begin
     TimerRing.Enabled := False;
     UpdateLabelWatch;
-    Ring(Bells);
     TimerRing.Interval := GetInterval;
     TimerRing.Enabled := True;
   end;
