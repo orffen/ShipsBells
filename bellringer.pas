@@ -10,6 +10,18 @@ uses
 
 type
 
+  { TRingThread }
+
+  TRingThread = class(TThread)
+  PlaySound: Tplaysound;
+  private
+    BellsToRing: Integer;
+  protected
+    procedure Execute; override;
+  public
+    constructor Create(player: Tplaysound; numberOfBells: Integer);
+  end;
+
   { TFormMain }
 
   TFormMain = class(TForm)
@@ -33,6 +45,7 @@ type
     procedure TimerRingTimer(Sender: TObject);
     procedure TrayIconClick(Sender: TObject);
   private
+    RingThread: TRingThread;
     function Bells: Integer;
     function GetInterval: Cardinal;
     function Watch: Integer;
@@ -59,6 +72,26 @@ const
 var
   TempDir: String;
 
+{ TRingThread }
+
+procedure TRingThread.Execute;
+begin
+  while BellsToRing > 0 do
+  begin
+    if BellsToRing > 1 then PlaySound.SoundFile := TempDir + 'tangtang.wav'
+    else PlaySound.SoundFile := TempDir + 'tang.wav';
+    PlaySound.Execute;
+    Dec(BellsToRing, 2);
+  end;
+end;
+
+constructor TRingThread.Create(player: Tplaysound; numberOfBells : Integer);
+begin
+  PlaySound := player;
+  BellsToRing := numberOfBells;
+  inherited Create(False);
+end;
+
 { TFormMain }
 
 procedure TFormMain.ButtonQuitClick(Sender: TObject);
@@ -81,7 +114,6 @@ procedure TFormMain.FormCreate(Sender: TObject);
 begin
   CreateWavFiles;
   UpdateLabelWatch;
-  Ring(Bells);
   TimerRing.Interval := GetInterval;
   TimerRing.Enabled := True;
 end;
@@ -110,6 +142,7 @@ begin
   begin
     TimerRing.Enabled := False;
     UpdateLabelWatch;
+    Ring(Bells);
     TimerRing.Interval := GetInterval;
     TimerRing.Enabled := True;
   end;
@@ -216,15 +249,9 @@ begin
   RemoveDir(TempDir);
 end;
 
-procedure TFormMain.Ring(numberOfBells: Integer); //TODO: this needs to spawn a separate thread
+procedure TFormMain.Ring(numberOfBells: Integer);
 begin
-  while numberOfBells > 0 do
-  begin
-    if numberOfBells > 1 then PlaySound.SoundFile := TempDir + 'tangtang.wav'
-    else PlaySound.SoundFile := TempDir + 'tang.wav';
-    PlaySound.Execute;
-    Dec(numberOfBells, 2);
-  end;
+  RingThread := TRingThread.Create(PlaySound, numberOfBells);
 end;
 
 procedure TFormMain.UpdateLabelWatch;
