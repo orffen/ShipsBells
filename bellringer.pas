@@ -5,8 +5,8 @@ unit BellRinger;
 interface
 
 uses
-  Classes, SysUtils, Forms, Controls, Graphics, Dialogs, StdCtrls, Menus,
-  ExtCtrls, About;
+  Classes, SysUtils, LCLType, Forms, Controls, Graphics, Dialogs, StdCtrls,
+  Menus, ExtCtrls, uplaysound, About;
 
 type
 
@@ -19,22 +19,26 @@ type
     LabelShipsBells: TLabel;
     MenuItemAbout: TMenuItem;
     MenuItemQuit: TMenuItem;
+    PlaySound : Tplaysound;
     PopupTrayMenu: TPopupMenu;
     TimerRing : TTimer;
     TrayIcon: TTrayIcon;
     procedure ButtonAboutClick(Sender: TObject);
     procedure ButtonQuitClick(Sender: TObject);
+    procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
     procedure FormCreate(Sender: TObject);
-    procedure FormWindowStateChange(Sender : TObject);
+    procedure FormWindowStateChange(Sender: TObject);
     procedure MenuItemAboutClick(Sender: TObject);
     procedure MenuItemQuitClick(Sender: TObject);
-    procedure TimerRingTimer(Sender : TObject);
+    procedure TimerRingTimer(Sender: TObject);
     procedure TrayIconClick(Sender: TObject);
   private
     function Bells: Integer;
     function GetInterval: Cardinal;
     function Watch: Integer;
     function WatchName(aWatch: Integer): String;
+    procedure CreateWavFiles;
+    procedure DeleteWavFiles;
     procedure Ring(numberOfBells: Integer);
     procedure UpdateLabelWatch;
 
@@ -52,11 +56,20 @@ implementation
 const
   BellNames: array of String = ('no?!?!?!', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight');
 
+var
+  TempDir: String;
+
 { TFormMain }
 
 procedure TFormMain.ButtonQuitClick(Sender: TObject);
 begin
+  DeleteWavFiles;
   Application.Terminate;
+end;
+
+procedure TFormMain.FormClose(Sender: TObject; var CloseAction : TCloseAction);
+begin
+  ButtonQuitClick(Sender);
 end;
 
 procedure TFormMain.ButtonAboutClick(Sender: TObject);
@@ -66,12 +79,14 @@ end;
 
 procedure TFormMain.FormCreate(Sender: TObject);
 begin
+  CreateWavFiles;
   UpdateLabelWatch;
+  Ring(Bells);
   TimerRing.Interval := GetInterval;
   TimerRing.Enabled := True;
 end;
 
-procedure TFormMain.FormWindowStateChange(Sender : TObject);
+procedure TFormMain.FormWindowStateChange(Sender: TObject);
 begin
   if FormMain.WindowState = wsMinimized then
   begin
@@ -90,7 +105,7 @@ begin
   Application.Terminate;
 end;
 
-procedure TFormMain.TimerRingTimer(Sender : TObject);
+procedure TFormMain.TimerRingTimer(Sender: TObject);
 begin
   begin
     TimerRing.Enabled := False;
@@ -160,12 +175,55 @@ begin
   else Result := WatchNames[0];
 end;
 
-procedure TFormMain.Ring(numberOfBells: Integer);
+procedure TFormMain.CreateWavFiles;
+var
+  F: TFileStream;
+  R: TResourceStream;
+begin
+  {$IfDef UNIX}
+  TempDir := '/tmp/shipsbells/';
+  {$Else}
+  TempDir := GetEnvironmentVariable('TEMP') + '\shipsbells\';
+  {$EndIf}
+  if not DirectoryExists(TempDir) then CreateDir(TempDir);
+  R := TResourceStream.Create(HINSTANCE, 'TANG', RT_RCDATA);
+  try
+    F := TFileStream.Create(TempDir + 'tang.wav', fmCreate);
+    try
+      F.CopyFrom(R, R.Size);
+    finally
+      F.Free;
+    end;
+  finally
+    R.Free;
+  end;
+  R := TResourceStream.Create(HINSTANCE, 'TANGTANG', RT_RCDATA);
+  try
+    F := TFileStream.Create(TempDir + 'tangtang.wav', fmCreate);
+    try
+      F.CopyFrom(R, R.Size);
+    finally
+      F.Free;
+    end;
+  finally
+    R.Free;
+  end;
+end;
+
+procedure TFormMain.DeleteWavFiles;
+begin
+  DeleteFile(TempDir + 'tang.wav');
+  DeleteFile(TempDir + 'tangtang.wav');
+  RemoveDir(TempDir);
+end;
+
+procedure TFormMain.Ring(numberOfBells: Integer); //TODO: this needs to spawn a separate thread
 begin
   while numberOfBells > 0 do
-  begin //TODO: this is just for testing; needs to ring bell instead once we have an audio library
-    if numberOfBells > 2 then ShowMessage('Ding, ding!')
-    else ShowMessage('Ding!');
+  begin
+    if numberOfBells > 1 then PlaySound.SoundFile := TempDir + 'tangtang.wav'
+    else PlaySound.SoundFile := TempDir + 'tang.wav';
+    PlaySound.Execute;
     Dec(numberOfBells, 2);
   end;
 end;
