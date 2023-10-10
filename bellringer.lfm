@@ -5318,25 +5318,22 @@ object FormMain: TFormMain
     Left = 171
     Top = 40
   end
-  object PlaySound: Tplaysound
-    About.Description.Strings = (
-      'Plays WAVE sounds in Windows or Linux'
-    )
-    About.Title = 'About PlaySound'
-    About.Height = 400
-    About.Width = 400
-    About.Font.Color = clNavy
-    About.Font.Height = -13
-    About.BackGroundColor = clCream
-    About.Version = '0.0.7'
-    About.Authorname = 'Gordon Bamber'
-    About.Organisation = 'Public Domain'
-    About.AuthorEmail = 'minesadorada@charcodelvalle.com'
-    About.ComponentName = 'PlaySound'
-    About.LicenseType = abModifiedGPL
-    PlayStyle = psSync
-    PlayCommand = 'sndPlaySound'
+  object AcsAudioOut: TAcsAudioOut
+    Input = AcsFileIn
+    BufferSize = 16384
+    PrefetchMode = pmAuto
+    DriverName = 'Wavemapper'
+    Device = 0
+    Volume = 0
+    Delay = 6
     Left = 144
+    Top = 40
+  end
+  object AcsFileIn: TAcsFileIn
+    StartSample = 0
+    EndSample = -1
+    Loop = False
+    Left = 120
     Top = 40
   end
 end

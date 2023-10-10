@@ -4,3 +4,4 @@ lib/
 *.lps
 *.o
 *.obj
+*.dbg

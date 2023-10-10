@@ -64,7 +64,7 @@
     </RunParams>
     <RequiredPackages>
       <Item>
-        <PackageName Value="playwavepackage"/>
+        <PackageName Value="laz_acs_lib"/>
       </Item>
       <Item>
         <PackageName Value="LCL"/>

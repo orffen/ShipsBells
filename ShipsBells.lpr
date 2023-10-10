@@ -10,7 +10,7 @@ uses
   athreads,
   {$ENDIF}
   Interfaces, // this includes the LCL widgetset
-  Forms, BellRinger, About;
+  Forms, laz_acs_lib, BellRinger, About;
 
 {$R *.res}
 
