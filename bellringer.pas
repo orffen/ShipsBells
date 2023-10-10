@@ -85,11 +85,12 @@ begin
   end;
 end;
 
-constructor TRingThread.Create(player: Tplaysound; numberOfBells : Integer);
+constructor TRingThread.Create(player: Tplaysound; numberOfBells: Integer);
 begin
   PlaySound := player;
   BellsToRing := numberOfBells;
   inherited Create(False);
+  FreeOnTerminate := True;
 end;
 
 { TFormMain }
@@ -100,7 +101,7 @@ begin
   Application.Terminate;
 end;
 
-procedure TFormMain.FormClose(Sender: TObject; var CloseAction : TCloseAction);
+procedure TFormMain.FormClose(Sender: TObject; var CloseAction: TCloseAction);
 begin
   ButtonQuitClick(Sender);
 end;
