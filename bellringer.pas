@@ -6,41 +6,43 @@ interface
 
 uses
   Classes, SysUtils, LCLType, Forms, Controls, Graphics, Dialogs, StdCtrls,
-  Menus, ExtCtrls, uplaysound, About;
+  Menus, ExtCtrls, acs_audio, acs_file, acs_stdaudio, About;
 
 type
 
   { TRingThread }
 
   TRingThread = class(TThread)
-  PlaySound: Tplaysound;
+  Player: TAcsAudioOut;
+  SoundFile: TAcsFileIn;
   private
     BellsToRing: Integer;
   protected
     procedure Execute; override;
   public
-    constructor Create(player: Tplaysound; numberOfBells: Integer);
+    constructor Create(numberOfBells: Integer; audioOut: TAcsAudioOut; fileIn: TAcsFileIn);
   end;
 
   { TFormMain }
 
   TFormMain = class(TForm)
+    AcsAudioOut: TAcsAudioOut;
+    AcsFileIn: TAcsFileIn;
     ButtonQuit: TButton;
     ButtonAbout: TButton;
     LabelWatch: TLabel;
     LabelShipsBells: TLabel;
-    MenuItemOpen : TMenuItem;
+    MenuItemOpen: TMenuItem;
     MenuItemQuit: TMenuItem;
-    PlaySound : Tplaysound;
     PopupTrayMenu: TPopupMenu;
-    TimerRing : TTimer;
+    TimerRing: TTimer;
     TrayIcon: TTrayIcon;
     procedure ButtonAboutClick(Sender: TObject);
     procedure ButtonQuitClick(Sender: TObject);
     procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure FormWindowStateChange(Sender: TObject);
-    procedure MenuItemOpenClick(Sender : TObject);
+    procedure MenuItemOpenClick(Sender: TObject);
     procedure MenuItemAboutClick(Sender: TObject);
     procedure MenuItemQuitClick(Sender: TObject);
     procedure TimerRingTimer(Sender: TObject);
@@ -79,17 +81,19 @@ procedure TRingThread.Execute;
 begin
   while BellsToRing > 0 do
   begin
-    if BellsToRing > 1 then PlaySound.SoundFile := TempDir + 'tangtang.wav'
-    else PlaySound.SoundFile := TempDir + 'tang.wav';
-    PlaySound.Execute;
+    if BellsToRing > 1 then SoundFile.FileName := TempDir + 'tangtang.wav'
+    else SoundFile.FileName := TempDir + 'tang.wav';
+    if SoundFile.Valid then Player.Run;
+    while Player.Active do Sleep(500);
     Dec(BellsToRing, 2);
   end;
 end;
 
-constructor TRingThread.Create(player: Tplaysound; numberOfBells: Integer);
+constructor TRingThread.Create(numberOfBells: Integer; audioOut: TAcsAudioOut; fileIn: TAcsFileIn);
 begin
-  PlaySound := player;
   BellsToRing := numberOfBells;
+  Player := audioOut;
+  SoundFile := fileIn;
   FreeOnTerminate := True;
   inherited Create(False);
 end;
@@ -141,6 +145,7 @@ end;
 
 procedure TFormMain.MenuItemQuitClick(Sender: TObject);
 begin
+  DeleteWavFiles;
   Application.Terminate;
 end;
 
@@ -258,7 +263,7 @@ end;
 
 procedure TFormMain.Ring(numberOfBells: Integer);
 begin
-  RingThread := TRingThread.Create(PlaySound, numberOfBells);
+  RingThread := TRingThread.Create(numberOfBells, AcsAudioOut, AcsFileIn);
 end;
 
 procedure TFormMain.UpdateLabelWatch;
