@@ -26,7 +26,7 @@ type
   protected
     procedure Execute; override;
   public
-    constructor Create(numberOfBells: Integer; audioOut: TAcsAudioOut; fileIn: TAcsFileIn);
+    constructor Create(NumberOfBells: Integer; AudioOut: TAcsAudioOut; FileIn: TAcsFileIn);
   end;
 
   { TFormMain }
@@ -58,10 +58,10 @@ type
     function Bells: Integer;
     function GetInterval: Cardinal;
     function Watch: Integer;
-    function WatchName(aWatch: Integer): String;
+    function WatchName(Watch: Integer): String;
     procedure CreateWavFiles;
     procedure DeleteWavFiles;
-    procedure Ring(numberOfBells: Integer);
+    procedure Ring(NumberOfBells: Integer);
     procedure UpdateLabelWatch;
 
   public
@@ -95,11 +95,11 @@ begin
   end;
 end;
 
-constructor TRingThread.Create(numberOfBells: Integer; audioOut: TAcsAudioOut; fileIn: TAcsFileIn);
+constructor TRingThread.Create(NumberOfBells: Integer; AudioOut: TAcsAudioOut; FileIn: TAcsFileIn);
 begin
-  BellsToRing := numberOfBells;
-  Player := audioOut;
-  SoundFile := fileIn;
+  BellsToRing := NumberOfBells;
+  Player := AudioOut;
+  SoundFile := FileIn;
   FreeOnTerminate := True;
   inherited Create(False);
 end;
@@ -211,13 +211,13 @@ begin
   then Result := Result + 1;
 end;
 
-function TFormMain.WatchName(aWatch: Integer): String;
+function TFormMain.WatchName(Watch: Integer): String;
 const
   WatchNames: array of String = ('First', 'Middle', 'Morning', 'Forenoon', 'Afternoon', 'First Dog', 'Second Dog');
 var
   w: Integer;
 begin
-  w := aWatch mod 48;
+  w := Watch mod 48;
   if w = 0 then Result := WatchNames[0]
   else if w <= 8 then Result := WatchNames[1]
   else if w <= 16 then Result := WatchNames[2]
@@ -270,9 +270,9 @@ begin
   RemoveDir(TempDir);
 end;
 
-procedure TFormMain.Ring(numberOfBells: Integer);
+procedure TFormMain.Ring(NumberOfBells: Integer);
 begin
-  RingThread := TRingThread.Create(numberOfBells, AcsAudioOut, AcsFileIn);
+  RingThread := TRingThread.Create(NumberOfBells, AcsAudioOut, AcsFileIn);
 end;
 
 procedure TFormMain.UpdateLabelWatch;
