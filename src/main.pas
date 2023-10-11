@@ -26,7 +26,7 @@ type
   protected
     procedure Execute; override;
   public
-    constructor Create(numberOfBells: Integer; audioOut: TAcsAudioOut; fileIn: TAcsFileIn);
+    constructor Create(NumberOfBells: Integer; AudioOut: TAcsAudioOut; FileIn: TAcsFileIn);
   end;
 
   { TFormMain }
@@ -58,11 +58,11 @@ type
     function Bells: Integer;
     function GetInterval: Cardinal;
     function Watch: Integer;
-    function WatchName(aWatch: Integer): String;
+    function WatchName: String;
     procedure CreateWavFiles;
     procedure DeleteWavFiles;
-    procedure Ring(numberOfBells: Integer);
-    procedure UpdateLabelWatch;
+    procedure Ring(NumberOfBells: Integer);
+    procedure LabelWatchUpdate;
 
   public
 
@@ -87,19 +87,23 @@ procedure TRingThread.Execute;
 begin
   while BellsToRing > 0 do
   begin
-    if BellsToRing > 1 then SoundFile.FileName := TempDir + 'tangtang.wav'
-    else SoundFile.FileName := TempDir + 'tang.wav';
-    if SoundFile.Valid then Player.Run;
-    while Player.Active do Sleep(500);
+    if BellsToRing > 1 then
+      SoundFile.FileName := TempDir + 'tangtang.wav'
+    else
+      SoundFile.FileName := TempDir + 'tang.wav';
+    if SoundFile.Valid then
+      Player.Run;
+    while Player.Active do
+      Sleep(500);
     Dec(BellsToRing, 2);
   end;
 end;
 
-constructor TRingThread.Create(numberOfBells: Integer; audioOut: TAcsAudioOut; fileIn: TAcsFileIn);
+constructor TRingThread.Create(NumberOfBells: Integer; AudioOut: TAcsAudioOut; FileIn: TAcsFileIn);
 begin
-  BellsToRing := numberOfBells;
-  Player := audioOut;
-  SoundFile := fileIn;
+  BellsToRing := NumberOfBells;
+  Player := AudioOut;
+  SoundFile := FileIn;
   FreeOnTerminate := True;
   inherited Create(False);
 end;
@@ -128,7 +132,7 @@ begin
   AcsAudioOut.DriverName := 'Alsa';
   {$EndIf}
   CreateWavFiles;
-  UpdateLabelWatch;
+  LabelWatchUpdate;
   TimerRing.Interval := GetInterval;
   TimerRing.Enabled := True;
 end;
@@ -160,13 +164,11 @@ end;
 
 procedure TFormMain.TimerRingTimer(Sender: TObject);
 begin
-  begin
-    TimerRing.Enabled := False;
-    UpdateLabelWatch;
-    Ring(Bells);
-    TimerRing.Interval := GetInterval;
-    TimerRing.Enabled := True;
-  end;
+  TimerRing.Enabled := False;
+  LabelWatchUpdate;
+  Ring(Bells);
+  TimerRing.Interval := GetInterval;
+  TimerRing.Enabled := True;
 end;
 
 procedure TFormMain.TrayIconClick(Sender: TObject);
@@ -205,27 +207,35 @@ var
 begin
   DecodeTime(Time, Hour, Minutes, Discard, Discard);
   Result := Hour * 2;
-  if Minutes >= 45
-  then Result := Result + 2
-  else if Minutes >= 15
-  then Result := Result + 1;
+  if Minutes >= 45 then
+    Result := Result + 2
+  else if Minutes >= 15 then
+    Result := Result + 1;
 end;
 
-function TFormMain.WatchName(aWatch: Integer): String;
+function TFormMain.WatchName: String;
 const
   WatchNames: array of String = ('First', 'Middle', 'Morning', 'Forenoon', 'Afternoon', 'First Dog', 'Second Dog');
 var
-  w: Integer;
+  W: Integer;
 begin
-  w := aWatch mod 48;
-  if w = 0 then Result := WatchNames[0]
-  else if w <= 8 then Result := WatchNames[1]
-  else if w <= 16 then Result := WatchNames[2]
-  else if w <= 24 then Result := WatchNames[3]
-  else if w <= 32 then Result := WatchNames[4]
-  else if w <= 36 then Result := WatchNames[5]
-  else if w <= 40 then Result := WatchNames[6]
-  else Result := WatchNames[0];
+  W := Watch mod 48;
+  if W = 0 then
+    Result := WatchNames[0]
+  else if W <= 8 then
+    Result := WatchNames[1]
+  else if W <= 16 then
+    Result := WatchNames[2]
+  else if W <= 24 then
+    Result := WatchNames[3]
+  else if W <= 32 then
+    Result := WatchNames[4]
+  else if W <= 36 then
+    Result := WatchNames[5]
+  else if W <= 40 then
+    Result := WatchNames[6]
+  else
+    Result := WatchNames[0];
 end;
 
 procedure TFormMain.CreateWavFiles;
@@ -238,7 +248,8 @@ begin
   {$Else}
   TempDir := GetEnvironmentVariable('TEMP') + '\shipsbells\';
   {$EndIf}
-  if not DirectoryExists(TempDir) then CreateDir(TempDir);
+  if not DirectoryExists(TempDir) then
+    CreateDir(TempDir);
   R := TResourceStream.Create(HINSTANCE, 'TANG', RT_RCDATA);
   try
     F := TFileStream.Create(TempDir + 'tang.wav', fmCreate);
@@ -270,16 +281,17 @@ begin
   RemoveDir(TempDir);
 end;
 
-procedure TFormMain.Ring(numberOfBells: Integer);
+procedure TFormMain.Ring(NumberOfBells: Integer);
 begin
-  RingThread := TRingThread.Create(numberOfBells, AcsAudioOut, AcsFileIn);
+  RingThread := TRingThread.Create(NumberOfBells, AcsAudioOut, AcsFileIn);
 end;
 
-procedure TFormMain.UpdateLabelWatch;
+procedure TFormMain.LabelWatchUpdate;
 begin
-  if Bells = 1
-  then LabelWatch.Caption := Format('%s bell in the %s Watch', [BellNames[Bells], WatchName(Watch)])
-  else LabelWatch.Caption := Format('%s bells in the %s Watch', [BellNames[Bells], WatchName(Watch)]);
+  if Bells = 1 then
+    LabelWatch.Caption := Format('%s bell in the %s Watch', [BellNames[Bells], WatchName])
+  else
+    LabelWatch.Caption := Format('%s bells in the %s Watch', [BellNames[Bells], WatchName]);
   TrayIcon.Hint := LabelWatch.Caption;
 end;
 
