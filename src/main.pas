@@ -58,11 +58,19 @@ type
     function Bells: Integer;
     function GetInterval: Cardinal;
     function Watch: Integer;
+<<<<<<< HEAD
     function WatchName: String;
     procedure CreateWavFiles;
     procedure DeleteWavFiles;
     procedure Ring(NumberOfBells: Integer);
     procedure LabelWatchUpdate;
+=======
+    function WatchName(Watch: Integer): String;
+    procedure CreateWavFiles;
+    procedure DeleteWavFiles;
+    procedure Ring(NumberOfBells: Integer);
+    procedure UpdateLabelWatch;
+>>>>>>> 9f8390135f98c58d376c65e26af1174f61696b26
 
   public
 
@@ -213,12 +221,17 @@ begin
     Result := Result + 1;
 end;
 
+<<<<<<< HEAD
 function TFormMain.WatchName: String;
+=======
+function TFormMain.WatchName(Watch: Integer): String;
+>>>>>>> 9f8390135f98c58d376c65e26af1174f61696b26
 const
   WatchNames: array of String = ('First', 'Middle', 'Morning', 'Forenoon', 'Afternoon', 'First Dog', 'Second Dog');
 var
   W: Integer;
 begin
+<<<<<<< HEAD
   W := Watch mod 48;
   if W = 0 then
     Result := WatchNames[0]
@@ -236,6 +249,17 @@ begin
     Result := WatchNames[6]
   else
     Result := WatchNames[0];
+=======
+  w := Watch mod 48;
+  if w = 0 then Result := WatchNames[0]
+  else if w <= 8 then Result := WatchNames[1]
+  else if w <= 16 then Result := WatchNames[2]
+  else if w <= 24 then Result := WatchNames[3]
+  else if w <= 32 then Result := WatchNames[4]
+  else if w <= 36 then Result := WatchNames[5]
+  else if w <= 40 then Result := WatchNames[6]
+  else Result := WatchNames[0];
+>>>>>>> 9f8390135f98c58d376c65e26af1174f61696b26
 end;
 
 procedure TFormMain.CreateWavFiles;
